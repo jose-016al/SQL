@@ -53,6 +53,51 @@ DESCRIBE prueba;
 DROP TABLE prueba;
 ```
 
+## Campos de una tabla y tipos de datos
+
+#### Las claves primarias PRIMARY KEY, las claves primarias sno admiten nulos y se pueden poner de dos formas 
+```sql
+CREATE TABLE prueba (
+    DNI VARCHAR(9) PRIMARY KEY
+);
+```
+```sql
+CREATE TABLE prueba (
+    DNI VARCHAR(9), 
+    PRIMARY KEY(DNI)
+);
+```
+#### Con AUTO_INCREMENT indicamos una clave que va aumetando su valor 
+```sql
+CREATE TABLE prueba (
+    id INT AUTO_INCREMENT PRIMARY KEY
+);
+```
+#### Con UNSIGNED recibe valores numericos positivos
+```sql
+CREATE TABLE prueba (
+    id INT UNSIGNED NOT NULL PRIMARY KEY
+);
+```
+#### Con DEFAULT asignamos un valor por defecto
+```sql
+CREATE TABLE prueba (
+    edad INT DEFAULT 18
+);
+```
+#### En los tipos de datos tenemos: enteros INT, decimales DOUBLE, caracteres CHAR, cedanas de texto  VARCHAR, fecha DATE en formato "AAAA-MM-DD", fecha y hora "AAAA-MM-DD HH-MM-SS" DATETIME, hora "HH-MM-SS" TIME
+```sql
+CREATE TABLE prueba (
+    enteros INT,
+    decimales DOUBLE,
+    caracteres CHAR,
+    cadena VARCHAR,
+    fecha DATE,
+    fecha_hora DATETIME,
+    hora TIME,
+);
+```
+
 ## Registros de una tabla
 
 #### Para insertar registros en una tabla se puede hacer de dos formas
@@ -66,7 +111,10 @@ tambien podemos insertar elementos concretos como solo el nombre
 ```sql
 INSERT INTO alumnos(nombre) VALUES("Luna");
 ```
-#### Para borrar todos los registros de una tabla, o podemos borrar un registro concreto usando WHERE
+#### Para borrar todos los registros de una tabla, podemos usar TRUNCATE o DELETE, aunque es mejor usar TRUNCATE, podemos borrar un registro concreto usando WHERE
+```sql
+TRUNCATE TABLE alumnos;
+```
 ```sql
 DELETE FROM alumnos;
 ```
@@ -87,7 +135,7 @@ SELECT * FROM alumnos;
 ```sql
 SELECT nombre, telefono, edad FROM alumnos;
 ```
-#### Con WHERE indicamos un valor a bucar, como mostrar todos los campos de la tabla alumnos 'donde' edad sea 22
+#### Con WHERE indicamos un valor a buscar, como mostrar todos los campos de la tabla alumnos 'donde' edad sea 22
 ```sql
 SELECT * FROM alumnos WHERE edad = 22;
 ```
