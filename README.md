@@ -130,16 +130,81 @@ UPDATE alumnos SET edad = 14 WHERE nombre = "Luna"
 
 #### Con SELECT mostramos los datos y con FROM indicamos a que tabla pertenecen
 ```sql
-SELECT * FROM alumnos;
+SELECT * 
+FROM alumnos;
 ```
 ```sql
-SELECT nombre, telefono, edad FROM alumnos;
+SELECT nombre, telefono, edad 
+FROM alumnos;
 ```
-#### Con WHERE indicamos un valor a buscar, como mostrar todos los campos de la tabla alumnos 'donde' edad sea 22
+#### Con WHERE indicamos un valor a buscar, como mostrar todos los campos de la tabla alumnos 'donde' edad sea 22, podemos usar opeadores como el AND, OR, NOT para una busqueda mas especifica
 ```sql
-SELECT * FROM alumnos WHERE edad = 22;
+SELECT * 
+FROM alumnos 
+WHERE edad = 22;
 ```
-#### 
-```sql
 
+## Funciones con consultas
+
+#### Podemos realizar operaciones en los campos ha mostrar
+```sql
+SELECT nombre, precio, cantidad, precio * cantidad 
+FROM productos;
+```
+#### Con CONCAT() podemos concatenar cadenas de texto
+```sql
+SELECT CONCAT("HOLA", " ", "MUNDO");
+```
+#### Con LENGTH nos muestra la longitud de una cadena
+```sql
+SELECT LENGTH("HOLA MUNDO");
+```
+#### Con TRIM() nos quita los espacios en blanco del principio y del final
+```sql
+SELECT TRIM("      HOLA MUNDO      ");
+```
+#### Con ORDER BY podemos ordenar la salida de la consulta medinate un parametro como la cantidad o el precio, podemos ordenar por orden ASC ascendente (de menor a mayor) o por orden DESC desxcendente (de mayor a menor)
+```sql
+SELECT nombre, precio, cantidad 
+FROM productos 
+ORDER BY cantidad DESC;
+```
+#### Con BETWEEN podemos buscar valores que esten entre un rango en vez de poner "WHERE (precio >= 20) AND (precio <= 40)", con BETWEEN es mas sencillo, con NOT invertimos la accion
+```sql
+SELECT *
+FROM productos
+WHERE precio BETWEEN 20 AND 40; 
+```
+#### Con IN tambien hacemos mas sencillas las consultas buscando el proveedor y una cadena 
+```sql
+SELECT * 
+FROM productos 
+WHERE proveedor IN ('HP', 'La mejor laptop');
+```
+#### Con LIKE podemos buscar algun dato de un registro como los nombres que empiecen por L, NOT Invierte la busqueda
+```sql
+SELECT *
+FROM productos
+WHERE nombre LIKE "L%"; 
+```
+#### Con COUNT() podemos contar registros
+```sql
+SELECT COUNT(*) AS proveedor
+FROM productos
+WHERE proveedor = "HP";
+```
+#### Con SUM() podemos sumar valores, con MAX() buscamos el valor mas alto, con MIN() buscamos el valor mas pequeño
+```sql
+SELECT SUM(cantidad) AS suma
+FROM productos;
+```
+#### Con GROUP BY agrupamos registros 
+```sql
+SELECT proveedor, COUNT(*) AS cantidad
+FROM productos
+GROUP BY proveedor;
+```
+#### Con DISTINCT omitimos los valores duplicados 
+```sql
+select DISTINCT proveedor from productos;
 ```
