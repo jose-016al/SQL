@@ -85,13 +85,14 @@ CREATE TABLE prueba (
     edad INT DEFAULT 18
 );
 ```
-#### En los tipos de datos tenemos: enteros INT, decimales DOUBLE, caracteres CHAR, cedanas de texto  VARCHAR, fecha DATE en formato "AAAA-MM-DD", fecha y hora "AAAA-MM-DD HH-MM-SS" DATETIME, hora "HH-MM-SS" TIME
+#### En los tipos de datos tenemos: enteros INT, decimales DOUBLE, caracteres CHAR, cedanas de texto  VARCHAR, para mas texto TEXT, fecha DATE en formato "AAAA-MM-DD", fecha y hora "AAAA-MM-DD HH-MM-SS" DATETIME, hora "HH-MM-SS" TIME
 ```sql
 CREATE TABLE prueba (
     enteros INT,
     decimales DOUBLE,
     caracteres CHAR,
     cadena VARCHAR,
+    texto TEXT,
     fecha DATE,
     fecha_hora DATETIME,
     hora TIME,
@@ -206,5 +207,36 @@ GROUP BY proveedor;
 ```
 #### Con DISTINCT omitimos los valores duplicados 
 ```sql
-select DISTINCT proveedor from productos;
+SELECT DISTINCT proveedor 
+FROM productos;
+```
+
+## Los Index o indices
+
+#### Para mostrar los indices de una tabla usamos SHOW INDEX y con FROM indicamos la tabla
+```sql
+SHOW index 
+FROM libro;
+```
+#### Por defecto tenemos un index que seria la PRIMARY KEY, en este caso añadimos dos indices mas para el autor y la editorial, se ponen NOT NULL y con INDEX especificamos un nombre y los campos
+```sql
+CREATE TABLE IF NOT EXISTS libros(
+    id INT UNSIGNED AUTO_INCREMENT NOT NULL,
+    titulo VARCHAR(100),
+    autor VARCHAR(50) NOT NULL,
+    descripcion TEXT,
+    editorial VARCHAR(15) NOT NULL,
+    PRIMARY KEY(id),
+    INDEX i_autoreditorial (autor, editorial)
+);
+```
+#### Para eliminar un indice usamos DROP ponemos el nombre del indice y con ON indicamos la tabla
+```sql
+DROP INDEX
+i_autoreditorial ON libros;
+```
+#### Agregando un indice a una tabla ya existente, usamos CREATE con ON indicamos la tabla y entre parenteis el campo al que se le asigna el index
+```sql
+CREATE INDEX 
+i_editorial ON libros (editorial);
 ```
