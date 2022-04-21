@@ -53,6 +53,47 @@ DESCRIBE prueba;
 DROP TABLE prueba;
 ```
 
+## Modificaciones
+
+#### Para añadir un campo a una tabla ya existente usamos ALTER TABLE ADD 
+```sql
+ALTER TABLE productos ADD precio INT UNSIGNED NOT NULL;
+```
+#### Para borrar un campo a una tabla ya existente usamos ALTER TABLE DROP 
+```sql
+ALTER TABLE productos DROP precio, DROP cantidad;
+```
+#### Para modificar el campo de una tabla usamos ALTER TABLE MODIFY
+```sql
+ALTER TABLE productos MODIFY nombre VARCHAR(100) NOT NULL;
+```
+#### Para cambiarle el nombre a un campo usamos ALTER TABLE CHANGE
+```sql
+ALTER TABLE productos CHANGE precio stock INT;
+```
+#### Para agregar una PRIMARY KEY a un campo ya existente
+```sql
+ALTER TABLE productos ADD PRIMARY KEY(id);
+ALTER TABLE productos MODIFY id INT UNSIGNED AUTO_INCREMENT NOT NULL;
+```
+#### Para eliminar un PRIMARY KEY debemos quitar el AUTO_INCREMENT
+```sql
+ALTER TABLE productos MODIFY id INT UNSIGNED;
+ALTER TABLE productos DROP PRIMARY KEY;
+```
+#### Para agregar y eliminar un indice a una tabla existente
+```sql
+ALTER TABLE productos ADD INDEX i_preciocantida (precio);
+ALTER TABLE productos DROP INDEX i_preciocantida;
+```
+#### Para cambiarle el nombre a una tabla usamos ALTER TABLE RENAME o RENAME TABLE
+```sql
+ALTER TABLE productos RENAME cliente;
+```
+```sql
+RENAME TABLE cliente TO productos;
+```
+
 ## Campos de una tabla y tipos de datos
 
 #### Las claves primarias PRIMARY KEY, las claves primarias sno admiten nulos y se pueden poner de dos formas 
