@@ -385,6 +385,43 @@ SELECT WEEKOFYEAR(NOW());
 
 ## Consulta multitabla JOIN 
 
+#### Con JOIN hacemos la conexion a otra tabla con ON conectamos la FOREIGN KEY con la PRIMARY KEY
+```sql
+SELECT p.nombre, p.descripcion, p.precio, pro.nombre 
+FROM productos AS p
+JOIN proveedor AS pro
+ON p.proveedorid = pro.id;
+```
+#### Con LEFT JOIN leemos la tabla de izquierda a derecha
+```sql
+SELECT p.nombre, p.descripcion, p.precio, pro.nombre FROM productos AS p
+LEFT JOIN proveedor AS pro
+ON pro.id = p.proveedorid;
+```
+#### Con RIGHT JOIN leemos la tabla de derecha a izquierda
+```sql
+SELECT p.nombre, p.descripcion, p.precio, pro.nombre FROM productos AS p
+RIGHT JOIN proveedor AS pro
+ON pro.id = p.proveedorid;
+```
+#### Con INNER JOIN si hay datos que no coinciden con la otra tabla no los muestra
+```sql
+SELECT p.nombre, p.descripcion, p.precio, pro.nombre FROM proveedor AS pro
+INNER JOIN productos AS p
+ON pro.id=p.proveedorid;
+```
+#### Podemos hacer agrupameintos de dos tablas
+```sql
+SELECT pro.nombre, COUNT(p.proveedorid) AS 'Cantidad de Productos'
+FROM proveedor AS pro
+JOIN productos AS p
+ON pro.id=p.proveedorid
+GROUP BY pro.nombre;
+```
+#### 
+```sql
+
+```
 ####
 ```sql
 
