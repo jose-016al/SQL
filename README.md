@@ -168,95 +168,6 @@ DELETE FROM alumnos WHERE nombre = "Jose";
 UPDATE alumnos SET edad = 14 WHERE nombre = "Luna"
 ```
 
-## Consultando datos de tablas 
-
-#### Con SELECT mostramos los datos y con FROM indicamos a que tabla pertenecen
-```sql
-SELECT * 
-FROM alumnos;
-```
-```sql
-SELECT nombre, telefono, edad 
-FROM alumnos;
-```
-#### Con WHERE indicamos un valor a buscar, como mostrar todos los campos de la tabla alumnos 'donde' edad sea 22, podemos usar opeadores como el AND, OR, NOT para una busqueda mas especifica
-```sql
-SELECT * 
-FROM alumnos 
-WHERE edad = 22;
-```
-
-## Funciones con consultas
-
-#### Podemos realizar operaciones en los campos ha mostrar
-```sql
-SELECT nombre, precio, cantidad, precio * cantidad 
-FROM productos;
-```
-#### Con CONCAT() podemos concatenar cadenas de texto
-```sql
-SELECT CONCAT("HOLA", " ", "MUNDO");
-```
-#### Con LENGTH nos muestra la longitud de una cadena
-```sql
-SELECT LENGTH("HOLA MUNDO");
-```
-#### Con TRIM() nos quita los espacios en blanco del principio y del final
-```sql
-SELECT TRIM("      HOLA MUNDO      ");
-```
-#### Con ORDER BY podemos ordenar la salida de la consulta medinate un parametro como la cantidad o el precio, podemos ordenar por orden ASC ascendente (de menor a mayor) o por orden DESC desxcendente (de mayor a menor)
-```sql
-SELECT nombre, precio, cantidad 
-FROM productos 
-ORDER BY cantidad DESC;
-```
-#### Con BETWEEN podemos buscar valores que esten entre un rango en vez de poner "WHERE (precio >= 20) AND (precio <= 40)", con BETWEEN es mas sencillo, con NOT invertimos la accion
-```sql
-SELECT *
-FROM productos
-WHERE precio BETWEEN 20 AND 40; 
-```
-#### Con IN tambien hacemos mas sencillas las consultas buscando el proveedor y una cadena 
-```sql
-SELECT * 
-FROM productos 
-WHERE proveedor IN ('HP', 'La mejor laptop');
-```
-#### Con LIKE podemos buscar algun dato de un registro como los nombres que empiecen por L usando el % "L%" o podemos buscar un registro que contenada una cadena o una letra "%aptop%", NOT Invierte la busqueda
-```sql
-SELECT *
-FROM productos
-WHERE nombre LIKE "L%"; 
-```
-```sql
-SELECT *
-FROM productos
-WHERE nombre LIKE "%aptop%"; 
-```
-#### Con COUNT() podemos contar registros
-```sql
-SELECT COUNT(*) AS proveedor
-FROM productos
-WHERE proveedor = "HP";
-```
-#### Con SUM() podemos sumar valores, con MAX() buscamos el valor mas alto, con MIN() buscamos el valor mas pequeño
-```sql
-SELECT SUM(cantidad) AS suma
-FROM productos;
-```
-#### Con GROUP BY agrupamos registros 
-```sql
-SELECT proveedor, COUNT(*) AS cantidad
-FROM productos
-GROUP BY proveedor;
-```
-#### Con DISTINCT omitimos los valores duplicados 
-```sql
-SELECT DISTINCT proveedor 
-FROM productos;
-```
-
 ## Los Index o indices
 
 #### Para mostrar los indices de una tabla usamos SHOW INDEX y con FROM indicamos la tabla
@@ -285,4 +196,212 @@ i_autoreditorial ON libros;
 ```sql
 CREATE INDEX 
 i_editorial ON libros (editorial);
+```
+
+## Consultas
+
+#### Con SELECT mostramos los datos y con FROM indicamos a que tabla pertenecen
+```sql
+SELECT * 
+FROM alumnos;
+```
+```sql
+SELECT nombre, telefono, edad 
+FROM alumnos;
+```
+#### Con WHERE indicamos un valor a buscar, como mostrar todos los campos de la tabla alumnos 'donde' edad sea 22, podemos usar opeadores como el AND, OR, NOT para una busqueda mas especifica
+```sql
+SELECT * 
+FROM alumnos 
+WHERE edad = 22;
+```
+#### Con ORDER BY podemos ordenar la salida de la consulta medinate un parametro como la cantidad o el precio, podemos ordenar por orden ASC ascendente (de menor a mayor) o por orden DESC desxcendente (de mayor a menor)
+```sql
+SELECT nombre, precio, cantidad 
+FROM productos 
+ORDER BY cantidad DESC;
+```
+#### Con GROUP BY agrupamos registros 
+```sql
+SELECT proveedor, COUNT(*) AS cantidad
+FROM productos
+GROUP BY proveedor;
+```
+#### Con DISTINCT omitimos los valores duplicados 
+```sql
+SELECT DISTINCT proveedor 
+FROM productos;
+```
+#### Con IFNULL() manejamos los valores nulos, cambiando su valor en la consulta para ue no salga NULL, por ejemplo si un aistente no tiene empresa que ponga "Sin empresa" en vez de NULL
+```sql
+SELECT IFNULL(empresa, "Sin empresa")
+FROM asistente;
+```
+#### Con COUNT() podemos contar registros
+```sql
+SELECT COUNT(*) AS proveedor
+FROM productos
+WHERE proveedor = "HP";
+```
+
+## Funciones de buquedas con WHERE
+
+#### Con IN tambien hacemos mas sencillas las consultas buscando el proveedor y una cadena 
+```sql
+SELECT * 
+FROM productos 
+WHERE proveedor IN ('HP', 'La mejor laptop');
+```
+#### Con LIKE podemos buscar algun dato de un registro como los nombres que empiecen por L usando el % "L%" o podemos buscar un registro que contenada una cadena o una letra "%aptop%", NOT Invierte la busqueda
+```sql
+SELECT *
+FROM productos
+WHERE nombre LIKE "L%"; 
+```
+```sql
+SELECT *
+FROM productos
+WHERE nombre LIKE "%aptop%"; 
+```
+#### Con BETWEEN podemos buscar valores que esten entre un rango en vez de poner "WHERE (precio >= 20) AND (precio <= 40)", con BETWEEN es mas sencillo, con NOT invertimos la accion
+```sql
+SELECT *
+FROM productos
+WHERE precio BETWEEN 20 AND 40; 
+```
+
+## Funciones numericas
+
+#### Podemos realizar operaciones en los campos ha mostrar
+```sql
+SELECT nombre, precio, cantidad, precio * cantidad 
+FROM productos;
+```
+#### Con SUM() podemos sumar valores, con MAX() buscamos el valor mas alto, con MIN() buscamos el valor mas pequeño
+```sql
+SELECT SUM(cantidad) AS suma
+FROM productos;
+```
+#### Con CEIL() redoondeamos un numero al entero superior mas cercano
+```sql
+SELECT precio, CEIL(precio)
+FROM conferencia;
+```
+#### Con FLOOR() redoondeamos un numero al entero menor mas cercano
+```sql
+SELECT precio, FLOOR(precio)
+FROM conferencia;
+```
+#### Con POWER() elevamos un componente al valor indicado
+```sql
+SELECT precio, POWER(precio, 2)
+FROM conferencia;
+```
+#### Con ROUND() redondea el numero n al siguiente numero con el numero de decimales que se
+indican
+```sql
+SELECT ROUND(12.123456789, 4);
+```
+#### Con SQRT() realizamos la raiz cuadrada de un numero
+```sql
+SELECT SQRT(25);
+```
+
+## Funciones de cadenas de caracteres
+
+#### Con CONCAT() podemos concatenar cadenas de texto
+```sql
+SELECT CONCAT("HOLA", " ", "MUNDO");
+```
+#### Con LOWER() pasamos la cadena a minusculas
+```sql
+SELECT LOWER(nombre) 
+FROM asistente;
+```
+#### Con UPPER() pasamos la cadena a mayusculas
+```sql
+SELECT UPPER(nombre) 
+FROM asistente;
+```
+#### Con RPAD rellenamos con una cadena a la izquierda y con LPAD a la derecha, rellenamos un numero de caracteres 
+```sql
+SELECT RPAD(nombre, 10, "-") 
+FROM asistente;
+```
+> Mario-----  
+Carmen----  
+Felipe----  
+#### Con REPLACE() reemplazamos un valor por otro
+```sql
+SELECT REPLACE(nombre, "José", "Pepe") 
+FROM asistente;
+```
+#### Con LENGTH nos muestra la longitud de una cadena
+```sql
+SELECT LENGTH("HOLA MUNDO");
+```
+#### Con TRIM() nos quita los espacios en blanco del principio y del final, con LTRIM() elimina los espacios a la izquierda y con RTRIM() elimina los espacios a la derecha
+```sql
+SELECT TRIM("      HOLA MUNDO      ");
+```
+
+## Funciones de manejo de fechas
+
+#### Con NOW() obtenemos la fecha y hora actuales
+```sql
+SELECT NOW();
+```
+#### Con CURDATE() nos devuelve la fecha actual en formato de cadena
+```sql
+SELECT CURDATE();
+```
+#### Con DATEDIFF() obtenemos dos fechas y se restan, para ver cuantos dias han pasado 
+```sql
+SELECT nombre, CONCAT(apellido1, " ", apellido2) AS apellidos,
+DATEDIFF(NOW(), fechaNac) AS "dias vividos" 
+FROM asistente;
+```
+#### Con DATE_FORMAT() le damos formato a una fecha
+```sql
+SELECT DATE_FORMAT(fecha, "%d-%m-%Y") AS fecha
+FROM conferencia;
+```
+#### Con DAY() obtenemos el dia del mes de una fecha
+```sql
+SELECT DAY(NOW());
+```
+#### Con DAYOFWEEK() obtenemos el numero de dia de la semana
+```sql
+SELECT DAYOFWEEK(NOW());
+```
+#### Con DAYOFYEAR() obtenemos el numero de dia del año 
+```sql
+SELECT DAYOFYEAR(NOW());
+```
+#### Con WEEKOFYEAR obtenemos el numero de semana
+```sql
+SELECT WEEKOFYEAR(NOW());
+```
+
+## Consulta multitabla JOIN 
+
+####
+```sql
+
+```
+####
+```sql
+
+```
+####
+```sql
+
+```
+####
+```sql
+
+```
+####
+```sql
+
 ```
