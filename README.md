@@ -223,11 +223,16 @@ SELECT *
 FROM productos 
 WHERE proveedor IN ('HP', 'La mejor laptop');
 ```
-#### Con LIKE podemos buscar algun dato de un registro como los nombres que empiecen por L, NOT Invierte la busqueda
+#### Con LIKE podemos buscar algun dato de un registro como los nombres que empiecen por L usando el % "L%" o podemos buscar un registro que contenada una cadena o una letra "%aptop%", NOT Invierte la busqueda
 ```sql
 SELECT *
 FROM productos
 WHERE nombre LIKE "L%"; 
+```
+```sql
+SELECT *
+FROM productos
+WHERE nombre LIKE "%aptop%"; 
 ```
 #### Con COUNT() podemos contar registros
 ```sql
