@@ -94,3 +94,63 @@ precio - precio * 0.10 AS "Descuento 10%",
 precio - precio * 0.15 AS "Descuento 15%",
 precio - precio * 0.20 AS "Descuento 20%"
 FROM conferencia;
+
+-- Tarea pag 17
+USE conferencias;
+/* Realizar una consulta que aplique un incremento del 5% a los precios de las 
+conferencias, una vez aplicado redondee el precio al número entero menor más 
+cercano y ordene finalmente las filas por el precio obtenido de forma descendente 
+(de mayor a menor). Hacer que la fecha se muestre en formato “DD/MM/YYYY”. */
+SELECT tema, FLOOR(precio + precio * 0.05) AS precio, 
+DATE_FORMAT(fecha, "%d-%m-%Y") AS fecha , turno, sala
+FROM conferencia
+ORDER BY precio DESC;
+
+/* Realizar una consulta sobre la tabla ponentes que muestre todos los campos 
+alfanuméricos en mayúsculas, se deben concatenar los apellidos y mostrar una 
+única columna para ambos. El resultado se debe ordenar por la columna de apellidos 
+resultante de forma ascendente. */
+SELECT UPPER(codigo) AS codigo, UPPER(nombre) AS nombre, 
+UPPER(CONCAT(apellido1, " ", apellido2)) AS apellidos, UPPER(especialidad) AS especialidad  
+FROM ponente
+ORDER BY apellidos;
+
+/* Repetir el ejercicio anterior para que en el caso de que el segundo apellido 
+sea NULL muestre la cadena '*****'. */
+SELECT UPPER(codigo) AS codigo, UPPER(nombre) AS nombre, 
+UPPER(CONCAT(apellido1, " ", IFNULL(apellido2, "*****"))) AS apellidos, UPPER(especialidad) AS especialidad  
+FROM ponente
+ORDER BY apellidos;
+
+/* Repetir el ejercicio anterior completando con * los nombres y apellidos que no 
+lleguen a 10 caracteres. */
+SELECT UPPER(codigo) AS codigo, UPPER(RPAD(nombre, 10, "*")) AS nombre, 
+UPPER(RPAD(CONCAT(apellido1, " ", IFNULL(apellido2, "*****")), 10, "*")) AS apellidos, 
+UPPER(especialidad) AS especialidad  
+FROM ponente
+ORDER BY apellidos;
+
+/* Realizar una consulta sobre la tabla asistente que muestre el nombre y apellidos 
+de los asistentes, en el resultado que se muestre la palabra “José” debe ser sustituida
+por “Pepe”. Además, para cada fila se debe añadir una nueva columna que muestre la 
+longitud total del nombre y apellidos del asistente sin tener en cuenta los espacios de
+separación entre el nombre y los apellidos. */
+SELECT REPLACE(nombre, "José", "Pepe") AS nombre , CONCAT(apellido1, " ", apellido2) AS apellidos,
+LENGTH(TRIM(CONCAT(nombre, apellido1, apellido2))) AS longitud
+FROM asistente;
+
+/* Realizar una consulta sobre la tabla asistente que muestre los días que lleva viviendo 
+cada uno de ellos. Además de los días vividos debe mostrar el nombre y los apellidos. */
+SELECT nombre, CONCAT(apellido1, " ", apellido2) AS apellidos,
+DATEDIFF(NOW(), fechaNac) AS "dias vividos" 
+FROM asistente;
+
+/* Realizar una consulta que muestre el nombre y los apellidos junto al día de la semana, 
+el día del año y el número de la semana de la fecha de nacimiento de cada uno de los 
+asistentes. Asignar un alias a cada uno de los campos mostrados. */
+SELECT nombre, CONCAT(apellido1, " ", apellido2) AS apellidos, DAYOFWEEK(fechaNac) AS "Dia de la semana", 
+DAYOFYEAR(fechaNac) AS "Dia del año", WEEKOFYEAR(fechaNac) AS "Numero de semana"  
+FROM asistente;
+
+-- Tarea pag 20
+USE conferencias;
