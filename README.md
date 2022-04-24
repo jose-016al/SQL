@@ -418,6 +418,9 @@ JOIN productos AS p
 ON pro.id=p.proveedorid
 GROUP BY pro.nombre;
 ```
+
+## Subconsultas
+
 #### 
 ```sql
 
