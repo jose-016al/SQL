@@ -154,3 +154,62 @@ FROM asistente;
 
 -- Tarea pag 20
 USE conferencias;
+/* Realizar una consulta donde se obtenga el número total de salas cuya capacidad sea igual o superior 
+a 200. */
+SELECT COUNT(*) AS "Numero de salas >= 200"  
+FROM sala
+WHERE capacidad >= 200;
+
+/* Realizar una consulta donde se obtenga la media de las gratificaciones de los ponentes. */
+SELECT codPonente, AVG(gratificacion) AS "Media de las gratificacion" 
+FROM participar
+GROUP BY codPonente;
+
+/* Realizar una consulta que muestre el total de salas distintas en función del turno: de 
+mañana (M) o tarde (T). */
+SELECT turno, COUNT(sala) AS "Salas segun turno"
+FROM conferencia
+GROUP BY turno;
+
+/* Repetir el ejercicio anterior teniendo en cuanta que la sala “Apolo” no debe salir 
+en el resultado final. */
+SELECT turno, COUNT(sala) AS "Salas segun turno"
+FROM conferencia
+WHERE sala NOT LIKE "Apolo"
+GROUP BY turno;
+
+/* Repetir el ejercicio anterior de forma que se muestre el total del turno de mañana (M). */
+SELECT COUNT(turno) AS "Turnos de mañana", COUNT(sala) AS "Salas segun turno" 
+FROM conferencia
+WHERE (sala NOT LIKE "Apolo") AND (turno LIKE "M")
+GROUP BY turno;
+
+/* Realizar una consulta que muestre el total de asistentes hombres (H) y mujeres (M) 
+de cada una de las empresas. */
+SELECT sexo, empresa, COUNT(sexo) AS asistentes
+FROM asistente
+GROUP BY sexo, empresa
+ORDER BY empresa;
+
+/* Repetir el ejercicio anterior de forma que para los asistentes que tenga como 
+valor de empresa NULL se agrupen en una categoría llamada "Sin empresa asignada". */
+SELECT sexo, IFNULL(empresa, "Sin empresa asignada") AS empresa, COUNT(sexo) AS asistentes
+FROM asistente
+GROUP BY sexo, empresa
+ORDER BY empresa;
+
+/* Repetir el ejercicio anterior y hacer que solo se muestren los totales de 
+hombres por cada una de las empresas. */
+SELECT sexo, IFNULL(empresa, "Sin empresa asignada") AS empresa, COUNT(sexo) AS asistentes
+FROM asistente
+WHERE sexo LIKE "H"
+GROUP BY sexo, empresa
+ORDER BY empresa;
+
+-- Tarea pag 25
+USE conferencias;
+
+
+
+
+-- Tarea pag 
