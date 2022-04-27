@@ -208,8 +208,52 @@ ORDER BY empresa;
 
 -- Tarea pag 25
 USE conferencias;
+/* Realizar una consulta donde se obtenga el nombre de los ponentes junto a la 
+referencia y el tema de las conferencias en las que han participado. */
+SELECT P.nombre, C.referencia, C.tema
+FROM ponente AS P
+JOIN participar AS par ON (P.codigo = par.codPonente)
+JOIN conferencia AS C ON (par.refConferencia = C.referencia);
 
+/* Realizar una consulta que obtenga un listado con el nombre y apellidos de 
+los asistentes que hayan asistido a la conferencia con referencia “PWB1314”. */
+SELECT A.nombre, CONCAT(A.apellido1, " ", A.apellido2) AS apellidos 
+FROM asistente AS A
+JOIN asistir AS asi ON (A.codigo = asi.codAsistente)
+JOIN conferencia AS C ON (C.referencia = asi.refConferencia)
+WHERE C.referencia LIKE "PWB1314";
 
+/* Realizar una consulta que muestre el número de asistentes a cada una de las conferencias. */
+SELECT C.tema, COUNT(A.codigo) AS "Numero de asistentes" 
+FROM asistente AS A
+JOIN asistir AS asi ON (A.codigo = asi.codAsistente)
+JOIN conferencia AS C ON (C.referencia = asi.refConferencia)
+GROUP BY C.tema;
 
+/* Realizar una consulta que muestre la sala donde cada ponente realiza su conferencia. 
+La consulta además de los datos del ponente debe mostrar el nombre de la sala, el tema 
+de la conferencia y el orden de intervención. Los resultados se deben ordenar por el 
+tema y el orden de intervención. */
+SELECT P.nombre, CONCAT(P.apellido1, " ", P.apellido2) AS apellidos, C.sala, C.tema, par.numOrden 
+FROM ponente AS P
+JOIN participar AS par ON (P.codigo = par.codPonente)
+JOIN conferencia AS C ON (C.referencia = par.refConferencia)
+ORDER BY C.tema, par.numOrden;
+
+/* Realizar una consulta que muestre el total de asistentes por conferencia y sala.
+El resultado se debe ordenar por el número de asistentes. */
+SELECT COUNT(asi.refConferencia) AS "Numero de asistentes"
+FROM asistente AS A
+JOIN asistir AS asi ON (A.codigo = asi.codAsistente)
+JOIN conferencia AS C ON (C.referencia = asi.refConferencia)
+GROUP BY asi.refConferencia;
+
+/* Realizar una consulta que muestre los distintos ponentes que han utilizado la sala “Afrodita”. */
+SELECT P.nombre, CONCAT(P.apellido1, " ", P.apellido2) AS apellidos 
+FROM ponente AS P
+JOIN participar AS par ON (P.codigo = par.codPonente)
+JOIN conferencia AS C ON (C.referencia = par.refConferencia)
+WHERE C.sala LIKE "Afrodita";
 
 -- Tarea pag 
+USE conferencias;
