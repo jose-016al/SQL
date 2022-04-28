@@ -421,7 +421,38 @@ GROUP BY pro.nombre;
 
 ## Subconsultas
 
-#### 
+#### Podemos realizar subconsultas de dos formas, realizandola en los campos del SELECT o en el WHERE para seleccionar un campo especifico
+```sql
+SELECT titulo, precio, precio - (SELECT MAX(precio) FROM libros) AS diferencia
+FROM libros
+ORDER BY diferencia;
+```
+```sql
+SELECT titulo, autor, precio
+FROM libros
+WHERE precio = (SELECT MAX(precio) FROM libros);
+```
+#### En los operadores del WHERE podemos usar IN y NOT IN para buscar datos  
+```sql
+SELECT nombre
+FROM editoriales
+WHERE codigo IN (SELECT codigoeditorial FROM libros WHERE autor = "Richard Bach");
+```
+#### Los operadores ANY y ALL, con ANY compara con cualquier fila de la consulta, y con ALL compara con todas las filas de la consulta 
+```sql
+SELECT titulo FROM libros WHERE autor = "Borges" and codigoeditorial = ANY 
+(SELECT e.codigo FROM editoriales AS e JOIN libros AS l ON codigoeditorial = e.codigo
+WHERE l.autor = "Richard Bach");
+```
+#### Los operadores EXISTS y NOT EXISTS
+```sql
+SELECT cliente, numero FROM facturas AS f WHERE EXISTS
+(SELECT * FROM detalles AS d WHERE f.numero = d.numerofactura AND d.articulo = 'lapiz');
+```
+
+## Las vistas
+
+####
 ```sql
 
 ```
