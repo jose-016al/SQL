@@ -452,15 +452,20 @@ SELECT cliente, numero FROM facturas AS f WHERE EXISTS
 
 ## Las vistas
 
-####
+#### Para la creacion de una vista usamos CREATE VIEW
 ```sql
-
+CREATE VIEW vista_empleado AS 
+SELECT CONCAT(apellido, ' ', e.nombre) AS nombre, sexo, s.nombre AS seccion, cantidadhijos 
+FROM empleados AS e JOIN secciones AS s ON codigo = seccion;
 ```
-####
+#### Para eliminar una vista
 ```sql
-
+DROP VIEW IF EXISTS vista_empleado;
 ```
-####
+
+## Procedimientos de almacenado
+
+#### 
 ```sql
 
 ```
