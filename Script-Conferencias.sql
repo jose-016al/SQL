@@ -255,5 +255,35 @@ JOIN participar AS par ON (P.codigo = par.codPonente)
 JOIN conferencia AS C ON (C.referencia = par.refConferencia)
 WHERE C.sala LIKE "Afrodita";
 
--- Tarea pag 
+-- Tarea pag 30
 USE conferencias;
+/* Realizar una consulta que seleccione los ponentes cuyo primer apellido sea igual al primer 
+apellido del asistente de menor edad. */
+SELECT apellido1 FROM ponente
+WHERE apellido1 = (SELECT apellido1 FROM asistente
+WHERE fechaNac = (SELECT MAX(fechaNac) FROM asistente)); 
+
+/* Realizar una consulta (utilizando subconsultas) que obtenga los distintos ponentes que 
+han usado la sala “Afrodita” para dar una conferencia. */
+SELECT P.codigo, P.nombre, CONCAT(P.apellido1, " ", P.apellido2) AS apellidos
+FROM ponente AS P JOIN participar AS par ON (P.codigo = par.codPonente)
+WHERE par.refConferencia = ANY (SELECT referencia FROM conferencia AS C WHERE C.sala LIKE "Afrodita");
+
+/* Realizar una consulta que muestre los asistentes de la empresa “BigSoft” que asisten 
+a algunas de las sesiones de la conferencia sobre “Programación Web”. */
+
+
+/* Realizar una consulta que muestre los asistentes que sean hombres y hayan nacido antes 
+del “01/01/1985”, y además hayan asistido a una conferencia sobre “Programación Web”. */
+
+
+/* Realizar una consulta que muestre el total de gratificaciones recibidas por cada uno 
+de los ponentes. */
+
+
+/* Realizar una consulta que muestre los asistentes a cada una de las conferencias que 
+se celebran el día “02/10/2013”. El resultado debe mostrarse ordenado por el tema de la 
+conferencia, así como por los apellidos y nombre de los asistentes. */
+
+
+-- Tarea pag 
