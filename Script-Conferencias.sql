@@ -271,19 +271,29 @@ WHERE par.refConferencia = ANY (SELECT referencia FROM conferencia AS C WHERE C.
 
 /* Realizar una consulta que muestre los asistentes de la empresa “BigSoft” que asisten 
 a algunas de las sesiones de la conferencia sobre “Programación Web”. */
-
+SELECT A.codigo, A.nombre, CONCAT(A.apellido1, " ", A.apellido2) AS apellidos  
+FROM asistente AS A JOIN asistir AS asi ON (A.codigo = asi.codAsistente)
+WHERE A.empresa LIKE "Bigsoft" AND asi.refConferencia = ANY 
+(SELECT referencia FROM conferencia AS C WHERE C.tema LIKE "Programación Web");
 
 /* Realizar una consulta que muestre los asistentes que sean hombres y hayan nacido antes 
 del “01/01/1985”, y además hayan asistido a una conferencia sobre “Programación Web”. */
-
+SELECT A.codigo, A.nombre, CONCAT(A.apellido1, " ", A.apellido2) AS apellidos, A.fechaNac 
+FROM asistente AS A JOIN asistir AS asi ON (A.codigo = asi.codAsistente)
+WHERE A.sexo LIKE "H" AND fechaNac <= "1985-01-01" AND asi.refConferencia = ANY 
+(SELECT referencia FROM conferencia AS C WHERE C.tema LIKE "Programación Web");
 
 /* Realizar una consulta que muestre el total de gratificaciones recibidas por cada uno 
 de los ponentes. */
-
+SELECT nombre, CONCAT(apellido1, " ", apellido2) AS apellidos FROM ponente
+WHERE codigo IN (SELECT codPonente FROM participar 
+WHERE gratificacion = (SELECT SUM(gratificacion) FROM participar));
 
 /* Realizar una consulta que muestre los asistentes a cada una de las conferencias que 
 se celebran el día “02/10/2013”. El resultado debe mostrarse ordenado por el tema de la 
 conferencia, así como por los apellidos y nombre de los asistentes. */
-
-
--- Tarea pag 
+SELECT C.tema, A.nombre, CONCAT(A.apellido1, " ", A.apellido2) AS apellidos  
+FROM asistente AS A JOIN asistir AS asi ON (A.codigo = asi.codAsistente)
+JOIN conferencia AS C ON (asi.refConferencia  = C.referencia)
+WHERE asi.refConferencia = ANY (SELECT referencia FROM conferencia AS C 
+WHERE C.fecha = "2013-10-02" ORDER BY C.tema, apellido1, apellido2, nombre);
