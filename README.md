@@ -462,22 +462,3 @@ FROM empleados AS e JOIN secciones AS s ON codigo = seccion;
 ```sql
 DROP VIEW IF EXISTS vista_empleado;
 ```
-
-## Procedimientos de almacenado
-
-#### 
-```sql
-
-```
-####
-```sql
-
-```
-####
-```sql
-
-```
-####
-```sql
-
-```
