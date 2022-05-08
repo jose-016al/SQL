@@ -1,13 +1,3 @@
-DROP USER IF EXISTS conferencias2;
-
-CREATE USER conferencias2 IDENTIFIED BY "conferencias2";
-
-DROP DATABASE IF EXISTS conferencias2;
-
-CREATE DATABASE conferencias2 COLLATE utf8mb4_spanish_ci;
-
-GRANT ALL PRIVILEGES ON conferencias2.* TO conferencias2;
-
 USE conferencias2;
 
 CREATE TABLE sala (
